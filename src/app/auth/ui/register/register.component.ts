@@ -1,0 +1,96 @@
+import { Component, inject } from '@angular/core';
+import { RegisterUseCase } from '../../use-cases/register.use-case';
+import { Router } from '@angular/router';
+import { 
+  FormBuilder, 
+  ReactiveFormsModule, 
+  Validators, 
+  AbstractControl, 
+  ValidationErrors 
+} from '@angular/forms';
+import { NgIf } from '@angular/common';
+
+@Component({
+  selector: 'app-register',
+  standalone: true,
+  imports: [ReactiveFormsModule, NgIf],
+  templateUrl: './register.component.html',
+  styleUrl: './register.component.css'
+})
+export class RegisterComponent {
+navigateTo() {
+  this.router.navigate(['auth/login'])
+}
+  private register = inject(RegisterUseCase);
+  private router = inject(Router);
+  private fb = inject(FormBuilder);
+
+  // Validador personalizado para confirmar contraseña
+  private passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
+    const password = control.get('password');
+    const confirmPassword = control.get('passwordConfirmacion');
+    
+    return password && confirmPassword && password.value !== confirmPassword.value ? 
+      { passwordMismatch: true } : null;
+  }
+
+  formulario = this.fb.group({
+    name: ['', [Validators.required, Validators.minLength(2)]],
+    apellidos: ['', [Validators.required, Validators.minLength(2)]],
+    nickname: ['', [Validators.required, Validators.minLength(3)]],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [
+      Validators.required, 
+      Validators.minLength(6),
+      // Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{6,}$/) // Al menos una mayúscula, una minúscula y un número
+    ]],
+    passwordConfirmacion: ['', [Validators.required]]
+  }, { validators: this.passwordMatchValidator });
+
+  // Getters para facilitar la validación en el template
+  get emailError() {
+    const control = this.formulario.get('email');
+    return control?.errors && control.touched;
+  }
+
+  get passwordError() {
+    const control = this.formulario.get('password');
+    return control?.errors && control.touched;
+  }
+
+  get passwordMismatch() {
+    return this.formulario.errors?.['passwordMismatch'] && 
+           this.formulario.get('passwordConfirmacion')?.touched;
+  }
+
+  protected send() {
+    if (this.formulario.valid) {
+      const { name, apellidos, nickname, email, password } = this.formulario.value;
+      
+      if (name && apellidos && nickname && email && password) {
+        const userData = {
+          name: `${name} ${apellidos}`.trim(),
+          nickname,
+          email,
+          password
+        };
+
+        this.register.execute(userData).subscribe({
+          next: () => {
+            this.router.navigate(['/auth/login']);
+          },
+          error: (error) => {
+            console.error('Error al registrar:', error);
+            // Aquí podrías añadir una notificación al usuario
+          }
+        });
+      }
+    } else {
+      // Marcar todos los campos como tocados para mostrar errores
+      Object.keys(this.formulario.controls).forEach(key => {
+        const control = this.formulario.get(key);
+        control?.markAsTouched();
+      });
+    }
+  }
+}

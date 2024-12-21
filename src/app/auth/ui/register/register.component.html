@@ -1,0 +1,76 @@
+<form [formGroup]="formulario" (ngSubmit)="send()" class="registro-form">
+  <div class="form-group">
+    <input 
+      type="text" 
+      formControlName="name" 
+      placeholder="Nombre"
+      [class.is-invalid]="formulario.get('name')?.errors && formulario.get('name')?.touched">
+    <div class="error-message" *ngIf="formulario.get('name')?.errors?.['required'] && formulario.get('name')?.touched">
+      El nombre es requerido
+    </div>
+  </div>
+
+  <div class="form-group">
+    <input 
+      type="text" 
+      formControlName="apellidos" 
+      placeholder="Apellidos"
+      [class.is-invalid]="formulario.get('apellidos')?.errors && formulario.get('apellidos')?.touched">
+    <div class="error-message" *ngIf="formulario.get('apellidos')?.errors?.['required'] && formulario.get('apellidos')?.touched">
+      Los apellidos son requeridos
+    </div>
+  </div>
+
+  <div class="form-group">
+    <input 
+      type="text" 
+      formControlName="nickname" 
+      placeholder="Nombre de usuario"
+      [class.is-invalid]="formulario.get('nickname')?.errors && formulario.get('nickname')?.touched">
+    <div class="error-message" *ngIf="formulario.get('nickname')?.errors?.['required'] && formulario.get('nickname')?.touched">
+      El nombre de usuario es requerido
+    </div>
+  </div>
+
+  <div class="form-group">
+    <input 
+      type="email" 
+      formControlName="email" 
+      placeholder="Email"
+      [class.is-invalid]="emailError">
+    <div class="error-message" *ngIf="formulario.get('email')?.errors?.['required'] && formulario.get('email')?.touched">
+      El email es requerido
+    </div>
+    <div class="error-message" *ngIf="formulario.get('email')?.errors?.['email'] && formulario.get('email')?.touched">
+      El email no es válido
+    </div>
+  </div>
+
+  <div class="form-group">
+    <input 
+      type="password" 
+      formControlName="password" 
+      placeholder="Contraseña"
+      [class.is-invalid]="passwordError">
+    <div class="error-message" *ngIf="formulario.get('password')?.errors?.['required'] && formulario.get('password')?.touched">
+      La contraseña es requerida
+    </div>
+    <div class="error-message" *ngIf="formulario.get('password')?.errors?.['pattern'] && formulario.get('password')?.touched">
+      La contraseña debe contener al menos una mayúscula, una minúscula y un número
+    </div>
+  </div>
+
+  <div class="form-group">
+    <input 
+      type="password" 
+      formControlName="passwordConfirmacion" 
+      placeholder="Confirmar contraseña"
+      [class.is-invalid]="passwordMismatch">
+    <div class="error-message" *ngIf="passwordMismatch">
+      Las contraseñas no coinciden
+    </div>
+  </div>
+
+  <button type="submit" [disabled]="formulario.invalid">Registrarse</button>
+  <button (click)="navigateTo()">Login</button>
+</form>

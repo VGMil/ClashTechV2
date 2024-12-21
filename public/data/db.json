@@ -1,0 +1,135 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Alice Johnson",
+      "email": "alice.johnson@example.com",
+      "nickname": "AliceJ",
+      "password": "12345abc"
+    },
+    {
+      "id": "2",
+      "name": "Bob Smith",
+      "email": "bob.smith@example.com",
+      "nickname": "Bobby",
+      "password": "password123"
+    },
+    {
+      "id": "3",
+      "name": "Charlie Brown",
+      "email": "charlie.brown@example.com",
+      "nickname": "CharlieB",
+      "password": "brownie99"
+    },
+    {
+      "id": "4",
+      "name": "Diana Prince",
+      "email": "diana.prince@example.com",
+      "nickname": "WonderD",
+      "password": "amazon123"
+    },
+    {
+      "id": "5",
+      "name": "Eve Adams",
+      "email": "eve.adams@example.com",
+      "nickname": "Evie",
+      "password": "securepass"
+    },
+    {
+      "id": "ef6d",
+      "email": "milotaku07@gmail.com",
+      "password": "1234"
+    },
+    {
+      "id": "383c",
+      "email": "milotaku07@gmail.com",
+      "password": "1234"
+    },
+    {
+      "id": "ce78",
+      "email": "milotaku07@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "a85d",
+      "email": "milotaku07@gmail.com",
+      "password": "1234567"
+    },
+    {
+      "id": "f5f3",
+      "email": "test@test.com",
+      "password": "123456"
+    },
+    {
+      "id": "7d7e",
+      "email": "test@test.com",
+      "password": "123456"
+    },
+    {
+      "id": "64df",
+      "email": "test@test.com",
+      "password": "123456"
+    },
+    {
+      "id": "a75a",
+      "email": "test@test.com",
+      "password": "123456"
+    },
+    {
+      "id": "7bb0",
+      "email": "test@test.com",
+      "password": "123456"
+    },
+    {
+      "id": "efed",
+      "email": "a@a.com",
+      "password": "123456"
+    },
+    {
+      "id": "3e76",
+      "email": "a@a.com",
+      "password": "123456"
+    },
+    {
+      "id": "3a1b",
+      "email": "a@a.com",
+      "password": "123456"
+    },
+    {
+      "id": "a31f",
+      "email": "a@a.com",
+      "password": "123456"
+    },
+    {
+      "id": "e421",
+      "email": "b@b.es",
+      "password": "123456"
+    },
+    {
+      "id": "519b",
+      "name": "Milton Velasquez",
+      "nickname": "VGMIL",
+      "email": "milotaku07@gmail.com",
+      "password": "isaito12"
+    },
+    {
+      "id": "490b",
+      "name": "123 Velasquez",
+      "nickname": "VGMIL",
+      "email": "milotaku07@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "421f",
+      "name": "Milton Velasquez",
+      "nickname": "NICK",
+      "email": "milotaku07@gmail.com",
+      "password": "123456"
+    },
+    {
+      "id": "49b9",
+      "email": "milotaku07@gmail.com",
+      "password": "123456"
+    }
+  ]
+}

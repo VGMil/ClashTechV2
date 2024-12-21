@@ -1,0 +1,43 @@
+<form [formGroup]="formulario" (ngSubmit)="send()" class="login-form">
+  <div class="form-group">
+    <input 
+      type="email" 
+      formControlName="email" 
+      placeholder="Email"
+      [class.is-invalid]="emailError">
+    
+    <div class="error-message" *ngIf="formulario.get('email')?.errors?.['required'] && formulario.get('email')?.touched">
+      El email es requerido
+    </div>
+    <div class="error-message" *ngIf="formulario.get('email')?.errors?.['email'] && formulario.get('email')?.touched">
+      El formato del email no es válido
+    </div>
+  </div>
+
+  <div class="form-group">
+    <input 
+      type="password" 
+      formControlName="password" 
+      placeholder="Contraseña"
+      [class.is-invalid]="passwordError">
+    
+    <div class="error-message" *ngIf="formulario.get('password')?.errors?.['required'] && formulario.get('password')?.touched">
+      La contraseña es requerida
+    </div>
+    <div class="error-message" *ngIf="formulario.get('password')?.errors?.['minlength'] && formulario.get('password')?.touched">
+      La contraseña debe tener al menos 6 caracteres
+    </div>
+  </div>
+
+  <div class="error-message" *ngIf="errorMessage">
+    {{ errorMessage }}
+  </div>
+
+  <button 
+    type="submit" 
+    [disabled]="formulario.invalid || isLoading">
+    {{ isLoading ? 'Iniciando sesión...' : 'Iniciar sesión' }}
+  </button>
+
+  <button (click)="navigateTo()">Registrarse</button>
+</form>
