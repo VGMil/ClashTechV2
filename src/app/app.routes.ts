@@ -1,10 +1,12 @@
 import { Routes } from '@angular/router';
 import { authRoutes } from './auth';
+import { tokenGuard } from './auth/infrastructure/guards/token.guard';
 
 export const routes: Routes = [
     {
         path: 'auth',
         loadChildren: () => authRoutes,
+        
     },
     {
         path:'**',
@@ -14,5 +16,6 @@ export const routes: Routes = [
     // {
     //     path: 'session',
     //     loadComponent: ()=>import('./session/session.component').then((m) => m.SessionsComponent)
+    //     canActivate: [tokenGuard]
     // }
 ];

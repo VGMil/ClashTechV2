@@ -9,9 +9,19 @@ export const authRoutes: Routes = [
     path: '',
     component: AuthComponent,
     children: [
-      { path: 'login', component: LoginComponent },
-      { path: 'register', component: RegisterComponent },
-      { path: '**', redirectTo: 'login' },
+      { 
+        path: 'login',
+        loadComponent: () => import('./ui/login').then(m => m.LoginComponent)
+      },
+      { 
+        path: 'register',
+        loadComponent: () => import('./ui/register').then(m => m.RegisterComponent)
+      },
+      {   
+        path: '**',
+        redirectTo: 'login',
+        pathMatch: 'full'
+      },
     ],
   },
   

@@ -10,8 +10,18 @@ import { Observable, tap } from 'rxjs';
 export class RegisterUseCase{
 
   constructor(private auth:AuthService) { }
-
-  execute(authUser:IRegisterUser): Observable<IRegisterUser> {
+/**
+ * Ejecuta el proceso de registro de un nuevo usuario.
+ * 
+ * Este método invoca el método `register` del repositorio de autenticación, que envía los 
+ * datos del usuario (como email, password, nombre, y nickname) al backend para crear 
+ * una nueva cuenta de usuario. La respuesta del backend es un mensaje que indica si 
+ * el registro fue exitoso o no. El método retorna un `Observable` con este mensaje.
+ * 
+ * @param authUser Datos del nuevo usuario que se desea registrar (email, password, name, nickname).
+ * @returns Un `Observable<string>` que emite el mensaje de respuesta del backend, indicando el estado del registro.
+ */
+  execute(authUser:IRegisterUser): Observable<String> {
     return this.auth.register(authUser);
   }
 }
