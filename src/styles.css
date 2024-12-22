@@ -1,1 +1,27 @@
-/* You can add global styles to this file, and also import other style files */
+/* src\styles.css */
+
+
+@font-face {
+    font-family: 'ARCADE';
+    src: url('/fonts/arcade.ttf') format('truetype');
+}
+
+ion-content {
+    --background: transparent !important;
+    --box-shadow: none;
+    --border-radius: 0;  
+}
+ion-page {
+    box-shadow: none; 
+    border: none;     
+  }
+html,body{
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+
+}
+body{
+    width: 100vw;
+    height: 100vh;
+}

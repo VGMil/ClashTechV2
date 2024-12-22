@@ -1,14 +1,15 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { LoginUseCase } from '../../use-cases/login.use-case';
-import { FormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ILoginUser } from '../../Models/AuthUser.model';
-import { Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { NgIf } from '@angular/common';
+import { IonContent, NavController } from '@ionic/angular/standalone';
+import { SpinnerComponent } from '../../../ui/spinner/spinner.component';
+
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [ReactiveFormsModule, NgIf],
+  imports: [ReactiveFormsModule, NgIf, IonContent, SpinnerComponent],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css'
 })
@@ -16,26 +17,29 @@ export class LoginComponent implements OnInit {
 
   private fb = inject(FormBuilder);
   private login = inject(LoginUseCase);
-  private router = inject(Router);
+  private router = inject(NavController);
   
   errorMessage = '';
   isLoading = false;
+  formulario: FormGroup;
 
-  formulario = this.fb.group({
-    email: ['', [
-      Validators.required,
-      Validators.email
-    ]],
-    password: ['', [
-      Validators.required,
-      Validators.minLength(6)
-    ]]
-  });
+  constructor() {
+    this.formulario = this.fb.group({
+      email: ['', [
+        Validators.required,
+        Validators.email
+      ]],
+      password: ['', [
+        Validators.required,
+        Validators.minLength(6)
+      ]]
+    });
+  }
 
   ngOnInit(): void {
     const currentUser = localStorage.getItem("currentUser");
     if (currentUser) {
-      this.router.navigate(['/dashboard']);
+      this.router.navigateForward(['/dashboard']);
     }
   }
 
@@ -61,11 +65,12 @@ export class LoginComponent implements OnInit {
         this.login.execute({ email, password }).subscribe({
           next: (response) => {
             localStorage.setItem('currentUser', JSON.stringify(response));
-            this.router.navigate(['/dashboard']);
+            this.router.navigateForward(['/dashboard']);
           },
           error: (error) => {
             this.errorMessage = 'Credenciales inválidas';
             console.error('Error en login:', error);
+            this.isLoading = false; // Ensure loading state is stopped on error
           },
           complete: () => {
             this.isLoading = false;
@@ -73,7 +78,7 @@ export class LoginComponent implements OnInit {
         });
       }
     } else {
-      // Marcar todos los campos como tocados para mostrar errores
+      // Mark all fields as touched to show errors
       Object.keys(this.formulario.controls).forEach(key => {
         this.formulario.get(key)?.markAsTouched();
       });
@@ -81,6 +86,10 @@ export class LoginComponent implements OnInit {
   }
 
   navigateTo() {
-    this.router.navigate(['/auth/register']);
+    this.formulario.reset(); // Reset form without marking it as touched
+    this.router.navigateForward(['/auth/register'],{
+      animated: true,
+      animationDirection: 'forward',
+    })
   }
 }

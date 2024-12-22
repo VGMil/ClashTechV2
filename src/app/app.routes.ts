@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { authRoutes } from './auth';
-import { tokenGuard } from './auth/infrastructure/guards/token.guard';
+// import { tokenGuard } from './auth/infrastructure/guards/token.guard';
 
 export const routes: Routes = [
     {

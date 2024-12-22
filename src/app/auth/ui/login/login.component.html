@@ -1,43 +1,58 @@
-<form [formGroup]="formulario" (ngSubmit)="send()" class="login-form">
-  <div class="form-group">
-    <input 
-      type="email" 
-      formControlName="email" 
-      placeholder="Email"
-      [class.is-invalid]="emailError">
+<ion-content [fullscreen]="true" [inert]="isLoading" class="ion-padding">
+  
+  <div class="login_container">
     
-    <div class="error-message" *ngIf="formulario.get('email')?.errors?.['required'] && formulario.get('email')?.touched">
-      El email es requerido
-    </div>
-    <div class="error-message" *ngIf="formulario.get('email')?.errors?.['email'] && formulario.get('email')?.touched">
-      El formato del email no es válido
-    </div>
-  </div>
-
-  <div class="form-group">
-    <input 
-      type="password" 
-      formControlName="password" 
-      placeholder="Contraseña"
-      [class.is-invalid]="passwordError">
+    <form [formGroup]="formulario" (ngSubmit)="send()" class="login-form">
+      <h2><span>C</span>LASH <span>T</span>ECH</h2>
+      <h3>Iniciar sesion</h3>
+      <div class="form-group">
+        <label for="email" class="visually-hidden">Email</label>
+        <input 
+          type="email" 
+          formControlName="email" 
+          placeholder="Email"
+          [class.is-invalid]="formulario.get('email')?.invalid && formulario.get('email')?.touched">
+        
+        <div class="error-message" *ngIf="formulario.get('email')?.errors?.['required'] && formulario.get('email')?.touched">
+          El email es requerido
+        </div>
+        <div class="error-message" *ngIf="formulario.get('email')?.errors?.['email'] && formulario.get('email')?.touched">
+          El formato del email no es válido
+        </div>
+      </div>
     
-    <div class="error-message" *ngIf="formulario.get('password')?.errors?.['required'] && formulario.get('password')?.touched">
-      La contraseña es requerida
-    </div>
-    <div class="error-message" *ngIf="formulario.get('password')?.errors?.['minlength'] && formulario.get('password')?.touched">
-      La contraseña debe tener al menos 6 caracteres
-    </div>
+      <div class="form-group">
+        <label for="password" class="visually-hidden">Contraseña</label>
+        <input 
+          type="password" 
+          formControlName="password" 
+          placeholder="Contraseña"
+          [class.is-invalid]="formulario.get('password')?.invalid && formulario.get('password')?.touched">
+        
+        <div class="error-message" *ngIf="formulario.get('password')?.errors?.['required'] && formulario.get('password')?.touched">
+          La contraseña es requerida
+        </div>
+        <div class="error-message" *ngIf="formulario.get('password')?.errors?.['minlength'] && formulario.get('password')?.touched">
+          La contraseña debe tener al menos 6 caracteres
+        </div>
+      </div>
+    
+      <div class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </div>
+    
+      <div class="form-buttons">
+        <button class="login"
+        type="submit" 
+        [disabled]="formulario.invalid || isLoading">
+        {{ isLoading ? 'Iniciando...' : 'Iniciar' }}
+      </button>
+    
+      <button class="register" type="button" (click)="navigateTo()">Registrar</button>
+      
+      </div>
+    </form>
   </div>
+  <app-spinner [isLoading]="isLoading"></app-spinner>
 
-  <div class="error-message" *ngIf="errorMessage">
-    {{ errorMessage }}
-  </div>
-
-  <button 
-    type="submit" 
-    [disabled]="formulario.invalid || isLoading">
-    {{ isLoading ? 'Iniciando sesión...' : 'Iniciar sesión' }}
-  </button>
-
-  <button (click)="navigateTo()">Registrarse</button>
-</form>
+</ion-content>
